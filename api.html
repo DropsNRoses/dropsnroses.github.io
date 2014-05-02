@@ -18,11 +18,11 @@
   </head>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#affix-nav">
     <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation">
       <div class="container">
         <a class="navbar-brand" href="index.html">Drops Developers</a>
         <ul class="nav navbar-nav pull-right nav-pills">
@@ -43,16 +43,79 @@
         <img src="img/api.png" alt="API" class="pull-right" width="20%" />
         <h1>API</h1>
         <p>
-          Discover the Drop API to implement it in your project or better understand how it works. If you are developping Android, it is recommended to use the official <a href="android.html">Android API</a>.
+          Discover the Drop API to implement it in your project or better understand how it works. If you are developping for Android, it is recommended to use the official <a href="android.html">Android API</a>.
         </p>
       </div>
 
 
-      <div class="row" data-spy="scroll" data-target="#affix-nav">
+      <div class="row">
         <div class="col-sm-9">
           <div class="page-header">
             <h2 id="msg-cmd">Message Commands</h2>
           </div>
+
+          <h3 id="read-msg-cmd">Read Message</h3>
+
+          <p>
+            Read the message with the given ID in the given box.
+
+            <div class="alert alert-info"><i class="glyphicon glyphicon-lock"></i> <strong>Authentication</strong> This command supports authentication. It can be runned as authenticated user or as admin. See <a href="#auth">Authentication section</a> for more informations.</div>
+
+            <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
+            <dl class="dl-horizontal">
+              <dt>Signed</dt>
+              <dd>Set to 1 if the command is signed (see <a href="#auth">Authentication section</a> for more informations).</dd>
+              <dt>Code</dt>
+              <dd><kbd>0x00</kbd></dd>
+              <dt>Length/Error</dt>
+              <dd><kbd>0x00</kbd></dd>
+              <dt>Message ID</dt>
+              <dd>Set to the message ID you want to read.</dd>
+              <dt>Box ID</dt>
+              <dd>Set to the box ID where the message is stored.</dd>
+              <dt>Timeout</dt>
+              <dd><kbd>0x00</kbd></dd>
+              <dt>Content</dt>
+              <dd>Empty.</dd>
+            </dl>
+
+            <h4><i class="glyphicon glyphicon-open"></i> Response</h4>
+            <p>Only the following fields are modified:</p>
+            <dl class="dl-horizontal">
+              <dt>Length/Error</dt>
+              <dd><kbd>0xff</kbd> if an error occured. Length of the content in bytes otherwise.</dd>
+              <dt>Timeout</dt>
+              <dd>Timeout of the message.</dd>
+              <dt>Content</dt>
+              <dd>If an error occured, it contains the error code on 4 bytes. Otherwise, it contains the content of the message (check the <em>Length/Error</em> field to know the length of the content).</dd>
+            </dl>
+
+            <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
+            <p>If an error occurs, the <em>Length/Error</em> field is set to <kbd>0xff</kbd> and the <em>Content</em> field contains one of the following error codes:</p>
+            <dl class="dl-horizontal">
+              <dt><kbd>0x16</kbd></dt>
+              <dd>Box not found.</dd>
+              <dt><kbd>0x17</kbd></dt>
+              <dd>Message not found.</dd>
+              <dt><kbd>0x1f</kbd></dt>
+              <dd>Invalid length (check the syntax of your command).</dd>
+              <dt><kbd>0x22</kbd></dt>
+              <dd>Not authorized (perhaps do you need to sign your request?).</dd>
+              <dt><kbd>0x35</kbd></dt>
+              <dd>Bad signature.</dd>
+            </dl>
+
+          </p>
+
+          <hr />
+
+          <h3 id="write-msg-cmd">Write Message</h3>
+
+
+          <h3 id="delete-msg-cmd">Delete Message</h3>
+
+
+          <h3 id="edit-msg-cmd">Edit Message</h3>
 
           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
 
@@ -87,8 +150,16 @@
 
 
         <nav class="col-sm-3" id="affix-nav">
-          <ul class="nav sidenav" data-spy="affix" data-offset-top="10">
-            <li class="active"><a href="#msg-cmd">Message Commands</a></li>
+          <ul class="nav sidenav" data-spy="affix">
+            <li class="active">
+              <a href="#msg-cmd">Message Commands</a>
+              <ul class="nav">
+                <li><a href="#read-msg-cmd">Read Message</a></li>
+                <li><a href="#write-msg-cmd">Write Message</a></li>
+                <li><a href="#delete-msg-cmd">Delete Message</a></li>
+                <li><a href="#edit-msg-cmd">Edit Message</a></li>
+              </ul>
+            </li>
             <li><a href="#box-cmd">Box Commands</a></li>
             <li><a href="#drop-cmd">Drop Commands</a></li>
             <li><a href="#long-cmd">Long Commands</a></li>

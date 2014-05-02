@@ -1,3 +1,3 @@
-$('#affix-nav').affix({
-  offset: { top: 200 }
+$('#affix-nav > ul').affix({
+  offset: { top: 390 }
 })

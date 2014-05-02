@@ -1,5 +1,4 @@
 body {
-  padding-top: 50px;
   padding-bottom: 20px;
 }
 
@@ -21,16 +20,30 @@ ul.nav li a {
   text-align: right;
 }
 
-ul.affix {
+#affix-nav > ul.affix {
     position: fixed; 
-    top: 100px;
+    top: 20px;
     width: 260px;
 }
 
-ul.affix-top {
+#affix-nav > ul.affix-top {
     position: static;
 }
 
-ul.affix-bottom {
+#affix-nav > ul.affix-bottom {
     position: absolute;
+}
+
+#affix-nav li.active > a {
+  font-weight: bold;
+}
+
+#affix-nav > ul a {
+  font-size: 1.1em;
+}
+
+#affix-nav > ul ul a {
+  font-size: 0.9em;
+  margin-top: 0;
+  padding-top: 0;
 }
