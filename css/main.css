@@ -3,6 +3,34 @@ body {
   padding-bottom: 20px;
 }
 
+ul.nav li a {
+  padding: 8px 15px;
+  margin: 7px 5px;
+}
+
 .jumbotron {
   margin-top: 2em;
+}
+
+.jumbotron img { 
+  margin-left: 30px;
+}
+
+
+#affix-nav {
+  text-align: right;
+}
+
+ul.affix {
+    position: fixed; 
+    top: 100px;
+    width: 260px;
+}
+
+ul.affix-top {
+    position: static;
+}
+
+ul.affix-bottom {
+    position: absolute;
 }
