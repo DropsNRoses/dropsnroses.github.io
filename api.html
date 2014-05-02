@@ -43,7 +43,7 @@
         <img src="img/api.png" alt="API" class="pull-right" width="20%" />
         <h1>API</h1>
         <p>
-          Discover the Drop API to implement it in your project or better understand how it works. If you are developping for Android, it is recommended to use the official <a href="android.html">Android API</a>.
+          Discover the Drop API to implement it in your project or better understand how it works. If you are developping for Android, it is recommended to use the official <a href="android.html">Android API</a>. Also make sure to read the <a href="get-started.html">Get started</a> section before this one, it will give you a general overview of the functioning of a Drop and how to communicate with it.
         </p>
       </div>
 
@@ -55,7 +55,47 @@
           </div>
 
           <h3 id="fields-msg-cmd">Fields</h3>
-          <p>TODO</p>
+          <p class="lead">The Message Commands contain this header (8 bytes) followed by an optional content (its length is given by the <em>Length/Error</em> field). Read the specific documentation of a command to know how to configure these fields.</p>
+
+          <table class="table fields">
+            <tr class="field-names">
+              <td>LE [0]</td>
+              <td colspan="6">Code</td>
+              <td>S</td>
+              <td colspan="8">LE [1..8]</td>
+              <td colspan="3">-</td>
+              <td colspan="5">Box ID</td>
+              <td colspan="8">Message ID [0..8]</td>
+              <td>-</td>
+              <td colspan="7">Message ID [8..14]</td>
+              <td colspan="8">Timestamp [0..7]</td>
+              <td colspan="8">Timestamp [8..15]</td>
+              <td colspan="8">Timestamp [16..23]</td>
+            </tr>
+            <tr class="binary">
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+            <tr class="hex">
+              <td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td>
+            </tr>
+          </table>
+
+          <dl class="dl-horizontal">
+            <dt>Signed (S)</dt>
+            <dd>Set to 1 if the command is signed (see <a href="#auth">Authentication section</a> for more informations).</dd>
+            <dt>Code</dt>
+            <dd>Code of the command to execute.</dd>
+            <dt>Length/Error (LE)</dt>
+            <dd>Length of the <em>Content</em> field. Set to <kbd>0xff</kbd> if an error occurs.</dd>
+            <dt>Message ID</dt>
+            <dd>ID of the message.</dd>
+            <dt>Box ID</dt>
+            <dd>ID of the box where the message is stored.</dd>
+            <dt>Timeout</dt>
+            <dd>Timeout of the message.</dd>
+            <dt>Content</dt>
+            <dd>Content of the message. It contains the error code if an error occurs.</dd>
+          </dl>
 
           <hr />
 

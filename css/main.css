@@ -51,3 +51,24 @@ ul.nav li a {
 .lead {
   font-size: 1.2em;
 }
+
+.table.fields .binary td:nth-child(4n) {
+  border-right: solid 1px rgb(200,200,200);
+}
+
+.table.fields .binary td:nth-child(8n), .table.fields .hex td, .table.fields .field-names td {
+  border-right: solid 2px rgb(150,150,150);
+}
+
+.table.fields .binary td:first-child, .table.fields .hex td:first-child, .table.fields .field-names td:first-child {
+  border-left: solid 2px rgb(150,150,150);
+}
+
+.table.fields .binary td {
+  min-width: 13px;
+}
+
+.table.fields td {
+  padding: 0.5em 0;
+  text-align: center;
+}
