@@ -514,7 +514,64 @@
             <h2 id="drop-cmd">Drop Commands</h2>
           </div>
 
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+          <h3 id="fields-drop-cmd">Fields</h3>
+
+          <p class="lead">The Drop Commands contain this header (2 bytes) followed by an optional content (its length is given by the <em>Length/Error</em> field). Read the specific documentation of a command to know how to configure these fields.</p>
+
+          <table class="table fields">
+            <tr class="field-names">
+              <td>LE [0]</td>
+              <td colspan="6">Code</td>
+              <td>S</td>
+              <td colspan="8">LE [1..8]</td>
+            </tr>
+            <tr class="binary">
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+            <tr class="hex">
+              <td colspan="8">0x00</td><td colspan="8">0x00</td>
+            </tr>
+          </table>
+
+          <dl class="dl-horizontal">
+            <dt>Signed (S)</dt>
+            <dd>Set to 1 if the command is signed (see <a href="#auth">Authentication section</a> for more informations).</dd>
+            <dt>Code</dt>
+            <dd>Code of the command to execute.</dd>
+            <dt>Length/Error (LE)</dt>
+            <dd>Length of the <em>Content</em> field. Set to <kbd>0xff</kbd> if an error occurs.</dd>
+          </dl>
+
+          <hr />
+
+          <h3 id="timestamp-drop-cmd">Read/Edit Timestamp</h3>
+
+          <hr />
+
+          <h3 id="box-ids-drop-cmd">List Box IDs</h3>
+
+          <hr />
+
+          <h3 id="drop-key-drop-cmd">Drop Public Key</h3>
+
+          <hr />
+
+          <h3 id="sign-drop-cmd">Sign</h3>
+
+          <hr />
+
+          <h3 id="admin-key-drop-cmd">Read/Edit Admin Public Key</h3>
+
+          <hr />
+
+          <h3 id="reset-drop-cmd">Factory Reset</h3>
+
+          <hr />
+
+          <h3 id="type-drop-cmd">Read/Edit Drop Type</h3>
+
+          <hr />
+
 
 
           <div class="page-header">
@@ -555,7 +612,19 @@
                 <li><a href="#revs-box-cmd">List Message Revisions</a></li>
               </ul>
             </li>
-            <li><a href="#drop-cmd">Drop Commands</a></li>
+            <li>
+              <a href="#drop-cmd">Drop Commands</a>
+              <ul class="nav">
+                <li><a href="#fields-drop-cmd">Fields</a></li>
+                <li><a href="#timestamp-drop-cmd">Read/Edit Timestamp</a></li>
+                <li><a href="#box-ids-drop-cmd">List Box IDs</a></li>
+                <li><a href="#drop-key-drop-cmd">Drop Public Key</a></li>
+                <li><a href="#sign-drop-cmd">Sign</a></li>
+                <li><a href="#admin-key-drop-cmd">Read/Edit Admin Public Key</a></li>
+                <li><a href="#reset-drop-cmd">Factory Reset</a></li>
+                <li><a href="#type-drop-cmd">Read/Edit Drop Type</a></li>
+              </ul>
+            </li>
             <li><a href="#long-cmd">Long Commands</a></li>
             <li><a href="#auth">Authentication</a></li>
           </ul>
