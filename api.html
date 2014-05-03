@@ -58,13 +58,13 @@
             <h2 id="overview">Overview</h2>
           </div>
 
-          <p class="lead">
+          <p>
             Drops use Bluetooth Low Energy (BLE) to communicate with another device. If you are not familiar with the basics of BLE, check out the <a href="https://developer.bluetooth.org/TechnologyOverview/Pages/BLE.aspx">Bluetooth Developer Portal</a> first.
           </p>
-          <p class="lead">
+          <p>
             The Drops advertise some data you can use to decide whether your application needs to connect or not, like the Drop Type which can help you to identify the drops compatible with your applocation. When you are connected to the drop, the advertising stops, so make sure to remain connected as least as possible. For more informations about this, check out the <a href="#advertising">Advertising section</a>.
           </p>
-          <p class="lead">
+          <p>
             The Drops use one service (<em>Drop Service</em>) which contains three characteristics (<em>Message Commands</em>, <em>Box Commands</em> and <em>Drop Commands</em>). Each characteristic is used for writing a request and reading the response. Here are the steps to send a command and read its response:
             <ol>
               <li>Write the command in the appropriate characteristic.</li>
@@ -74,10 +74,10 @@
             </ol>
           </p>
           <div class="alert alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> <strong>Warning!</strong> No request should be sent before the previous response notification has been received and acknowledged, even if the two requests are performed on different characteristics. The behaviour of the drop is not defined if you do not abide by this rule.</div>
-          <p class="lead">
+          <p>
             Due to some hardware restrictions, it is currently impossible to use the Write Long Bluetooth feature. However, we have implemented a workaround to let devices write commands longer than 20 bytes. See <a href="#long-cmd">Long Commands section</a> to learn how to use it.
           </p>
-          <p class="lead">
+          <p>
             Some commands also require the user to be authenticated as the administrator or as a user with priveleges. Check the <a href="#auth">Authentication section</a> for more informations about it.
           </p>
 
@@ -748,7 +748,29 @@
             <h2 id="long-cmd">Long Commands</h2>
           </div>
 
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+          <p class="lead">
+            Due to some hardware restrictions, it is currently impossible to use the Write Long Bluetooth feature. However, we have implemented a workaround to let devices write commands longer than 20 bytes. If the command is not longer than 20 bytes, no special behaviour is required. Otherwise, you must abide by the following rules.
+          </p>
+
+          <p>
+            A Long Command must be split into 20 bytes chunks. The first chunk is not modified. The others must start with the index of the chunk (the index starts at 1 for the second chunk). Here is an example of a Long Command before and after splitting (the index is highlighted):
+          </p>
+
+          <pre>Before split:<br />071a010100ffffff000000020100000000000000000000000000000000deadbeef581c748ab1c7a725824ef3ba4d823626626c6120626c6120626c614fce49ca303d1794eb1ec75d876828b96745f456d74f84d114231d6e5fc89ec5ffff<br /><br />After split:<br />071a010100ffffff000000020100000000000000   &lt;-- 1st chunk, no index, 20 bytes of actual content<br /><strong>01</strong>000000000000000000deadbeef581c748ab1c7   &lt;-- 2nd chunk, index 01, 19 bytes of actual content<br /><strong>02</strong>a725824ef3ba4d823626626c6120626c612062   &lt;-- 3rd chunk, index 02, 19 bytes of actual content<br /><strong>03</strong>6c614fce49ca303d1794eb1ec75d876828b967   &lt;-- 4th chunk, index 03, 19 bytes of actual content<br /><strong>04</strong>45f456d74f84d114231d6e5fc89ec5ffff       &lt;-- 5th and last chunk, index 04, 19 bytes of actual content</pre>
+
+          <p>
+            Be careful with the following points:
+            <ul>
+              <li>The index is written is hexadecimal (the chunk after <kbd>09</kbd> is <kbd>0a</kbd>).</li>
+              <li>No padding is required for the last chunk.</li>
+              <li>A command which is exactly 20 bytes long <strong>does not</strong> need to be split.</li>
+              <li>A command which is exactly 40 bytes long requires 2 chunks (and not a third empty one).</li>
+              <li>If the command is signed, you must split your command <strong>after</strong> appending the signature. Also, given the length of a signature, all the signed commands are also Long Commands.</li>
+              <li>If the sent index is not the one the Drop was expecting, it will return a <kbd>0x20</kbd> error.</li>
+              <li>If anything else does not respect these rules, the Drop will return a <kbd>0x1f</kbd> error.</li>
+            </ul>
+          </p>
+
 
 
           <div class="page-header">
