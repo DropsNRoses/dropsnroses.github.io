@@ -72,8 +72,88 @@
         <h2>DropConf</h2>
       </div>
 
-      <div class="alert alert-danger">TODO</div>
 
+      <h3>Overview</h3>
+      <p>DropConf is a script which executes several commands automatically, with the right timing between each command. It can be used to configure several drops in a row, or to generate configuration files automatically in a Web server for example. It reads the commands in a local file or in a remote file located with its URL.</p>
+
+
+      <h3>Install</h3>
+      <p>
+        Before using DropConf, you must install <a href="http://coffeescript.org/">CoffeeScript</a> and <a href="http://github.com/sandeepmistry/noble">Noble</a>. You can do this using npm: <kbd>$ npm install coffee noble</kbd>. Noble also requires the <kbd>libbluetooth-dev</kbd> package. Then you can download the script:
+      </p>
+      <p><a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-download"></i> Download DropConf</a></p>
+
+
+      <h3>Usage</h3>
+      <p>Before running DropConf, make sure to activate Bluetooth on your computer.</p>
+      <p>You can either give a DropConf file or an url as an argument. The file must respect the DropConf file format (see below). The command must be executed as root if you don't have the permission to access your HCI device.</p>
+      <pre>sudo coffee dropconf.coffee --file mydropconf.drop<br />sudo coffee dropconf.coffee --url http://www.example.com/dropconf/42.drop</pre>
+      <p>At start, the script scans the available BLE devices at range:</p>
+      <pre>Start Scanning (at any moment, enter the number of a device to connect to it).<br />0: c4:b6:49:bb:89:4e Drop12<br />1: f3:fd:8f:cd:9d:ca Drop26<br />2: dd:ef:20:e8:91:82 Drop09</pre>
+      <p>The scan will continue until you type the number of the drop you want to connect to (or hit <kbd>Ctrl+C</kbd> to stop the script). For example, to connect to Drop26, type <kbd>1</kbd> followed by <kbd>Enter</kbd>.</p>
+      <p>Then, the script will run all the commands contained in the file you specified in your argument. It will show the sent requests and the recieved notifications. Here is an example of output:</p>
+      <pre>Connecting to Drop26
+Discovering characteristics
+Activate notifications for 0000280012008da5e31130b4c03b539b
+done
+Activate notifications for 0000280112008da5e31130b4c03b539b
+done
+Activate notifications for 0000280212008da5e31130b4c03b539b
+done
+Write in 0000280212008da5e31130b4c03b539b: 8d00022c65faa0248a5df6c83f20d25545459120
+Write in 0000280212008da5e31130b4c03b539b: 0107ac5d12dc0c44fdea901436cc8850ffff
+Notification: 8d00
+Write in 0000280112008da5e31130b4c03b539b: 0103010102f04f0000fb4a326b72e6b14b4f7902
+Write in 0000280112008da5e31130b4c03b539b: 01d95750ebdb286c20399d752aea4838b846aab2
+Write in 0000280112008da5e31130b4c03b539b: 025f6bffff
+Notification: 010301
+Write in 0000280012008da5e31130b4c03b539b: 071a010100ffffff000000020100000000000000
+Write in 0000280012008da5e31130b4c03b539b: 01000000000000000000deadbeef581c748ab1c7
+Write in 0000280012008da5e31130b4c03b539b: 02a725824ef3ba4d823626626c6120626c612062
+Write in 0000280012008da5e31130b4c03b539b: 036c614fce49ca303d1794eb1ec75d876828b967
+Write in 0000280012008da5e31130b4c03b539b: 0445f456d74f84d114231d6e5fc89ec5ffff
+Notification: 071a010100ffffff
+Disconnecting from Drop26
+You can now close the window
+</pre>
+      <p>The last line indicates that the script finished successfully.</p>
+
+
+      <h3>DropConf file format</h3>
+      <p>Here is an example of a DropConf file (this is the file used in the output example above):</p>
+      <pre>2 0 8d00029696a74c757ca51d9d2c49b44495011d24
+2 1 0176293f3d419dc93f3330ff91b5f01effff
+1 0 0103010102f04f0000ba772df3b8fe4f593fbd99
+1 0 0124aa5532ef43f21267331512b52d69634fc0c6
+1 1 02da89ffff
+0 0 071a010100ffffff000000020100000000000000
+0 0 01000000000000000000deadbeef581c748ab1c7
+0 0 02a725824ef3ba4d823626626c6120626c612062
+0 0 036c617fa4ea756631f9acc7192bd8c5f07014ff
+0 1 047d304a7d23df52b82ab2ecc5aef717ffff</pre>
+      <p>Each command is written on a single line.</p>
+      <p>
+        The first column indicates the characteristic where the command should be written:
+        <dl class="dl-horizontal">
+          <dt>0</dt>
+          <dd>Message Command</dd>
+          <dt>1</dt>
+          <dd>Box Command</dd>
+          <dt>2</dt>
+          <dd>Drop Command</dd>
+        </dl>
+      </p>
+      <p>
+        The second column indicates if this command expects a notification:
+        <dl class="dl-horizontal">
+          <dt>0</dt>
+          <dd>The command will just wait for the Write Acknowledge and then run the next command.</dd>
+          <dt>1</dt>
+          <dd>The command will wait for a notification, display it and then run the next command.</dd>
+        </dl>
+      </p>
+      <p>The third column contains the command, written in hexadecimal.</p>
+      <div class="alert alert-warning"><strong>Warning!</strong> The commands must be split in case of <a href="api.html#long-cmd">Long Commands</a>, and signed in case of <a href="api.html#auth">Authenticated Commands</a>.</div>
 
 
     </div>
