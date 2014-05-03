@@ -55,11 +55,13 @@
           </div>
 
           <p class="lead">
-            Drops use Bluetooth Low Energy (BLE) to communicate with another device. If you are not familiar with the basics of BLE, check out the <a href="https://developer.bluetooth.org/TechnologyOverview/Pages/BLE.aspx">Bluetooth Developer Portal</a> first.<br />
-            The Drop profile uses one service (<em>Drop Service</em>) which contains three characteristics (<em>Message Commands</em>, <em>Box Commands</em> and <em>Drop Commands</em>). Each characteristic is used for writing a request and reading the response.
+            Drops use Bluetooth Low Energy (BLE) to communicate with another device. If you are not familiar with the basics of BLE, check out the <a href="https://developer.bluetooth.org/TechnologyOverview/Pages/BLE.aspx">Bluetooth Developer Portal</a> first.
           </p>
           <p class="lead">
-            Here are the steps to send a command and read its response:
+            The Drops advertise some data you can use to decide whether your application needs to connect or not, like the Drop Type which can help you to identify the drops compatible with your applocation. When you are connected to the drop, the advertising stops, so make sure to remain connected as least as possible. For more informations about this, check out the <a href="#advertising">Advertising section</a>.
+          </p>
+          <p class="lead">
+            The Drops use one service (<em>Drop Service</em>) which contains three characteristics (<em>Message Commands</em>, <em>Box Commands</em> and <em>Drop Commands</em>). Each characteristic is used for writing a request and reading the response. Here are the steps to send a command and read its response:
             <ol>
               <li>Write the command in the appropriate characteristic.</li>
               <li>Wait for the ACK. After this, the drop starts processing your request.</li>
@@ -74,6 +76,12 @@
           <p class="lead">
             Some commands also require the user to be authenticated as the administrator or as a user with priveleges. Check the <a href="#auth">Authentication section</a> for more informations about it.
           </p>
+
+
+          <div class="page-header">
+            <h2 id="advertising">Advertising</h2>
+          </div>
+
 
 
           <div class="page-header">
@@ -731,9 +739,6 @@
           </dl>
 
 
-          <hr />
-
-
 
           <div class="page-header">
             <h2 id="long-cmd">Long Commands</h2>
@@ -753,6 +758,7 @@
         <nav class="col-sm-3" id="affix-nav">
           <ul class="nav sidenav" data-spy="affix">
             <li class="active"><a href="#overview">Overview</a></li>
+            <li><a href="#advertising">Advertising</a></li>
             <li>
               <a href="#msg-cmd">Message Commands</a>
               <ul class="nav">

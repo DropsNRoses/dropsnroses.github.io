@@ -43,13 +43,21 @@ ul.nav li a {
 }
 
 #affix-nav > ul ul a {
-  font-size: 0.9em;
+  font-size: 0.85em;
   margin-top: 0;
   padding-top: 0;
 }
 
 #affix-nav > ul li:not(.active) ul {
   display: none;
+}
+
+.page-header:not(:first-child) {
+  margin-top: 7em;
+}
+
+hr {
+  margin: 2.5em 0;
 }
 
 .lead {
