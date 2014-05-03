@@ -48,6 +48,10 @@ ul.nav li a {
   padding-top: 0;
 }
 
+#affix-nav > ul li:not(.active) ul {
+  display: none;
+}
+
 .lead {
   font-size: 1.2em;
 }

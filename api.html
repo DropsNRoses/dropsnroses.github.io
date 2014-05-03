@@ -41,7 +41,7 @@
 
       <div class="jumbotron">
         <img src="img/api.png" alt="API" class="pull-right" width="20%" />
-        <h1>API</h1>
+        <h1>Drop API</h1>
         <p>
           Discover the Drop API to implement it in your project or better understand how it works. If you are developping for Android, it is recommended to use the official <a href="android.html">Android API</a>. Also make sure to read the <a href="get-started.html">Get started</a> section before this one, it will give you a general overview of the functioning of a Drop and how to communicate with it.
         </p>
@@ -50,6 +50,32 @@
 
       <div class="row">
         <div class="col-sm-9">
+          <div class="page-header">
+            <h2 id="overview">Overview</h2>
+          </div>
+
+          <p class="lead">
+            Drops use Bluetooth Low Energy (BLE) to communicate with another device. If you are not familiar with the basics of BLE, check out the <a href="https://developer.bluetooth.org/TechnologyOverview/Pages/BLE.aspx">Bluetooth Developer Portal</a> first.<br />
+            The Drop profile uses one service (<em>Drop Service</em>) which contains three characteristics (<em>Message Commands</em>, <em>Box Commands</em> and <em>Drop Commands</em>). Each characteristic is used for writing a request and reading the response.
+          </p>
+          <p class="lead">
+            Here are the steps to send a command and read its response:
+            <ol>
+              <li>Write the command in the appropriate characteristic.</li>
+              <li>Wait for the ACK. After this, the drop starts processing your request.</li>
+              <li>The drop notify the response on the same characteristic (only the first 20 bytes are notified).</li>
+              <li>If the response is longer than 20 bytes, you might want to read the full characteristic.</li>
+            </ol>
+          </p>
+          <div class="alert alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> <strong>Warning!</strong> No request should be sent before the previous response notification has been received and acknowledged, even if the two requests are performed on different characteristics. The behaviour of the drop is not defined if you do not abide by this rule.</div>
+          <p class="lead">
+            Due to some hardware restrictions, it is currently impossible to use the Write Long Bluetooth feature. However, we have implemented a workaround to let devices write commands longer than 20 bytes. See <a href="#long-cmd">Long Commands section</a> to learn how to use it.
+          </p>
+          <p class="lead">
+            Some commands also require the user to be authenticated as the administrator or as a user with priveleges. Check the <a href="#auth">Authentication section</a> for more informations about it.
+          </p>
+
+
           <div class="page-header">
             <h2 id="msg-cmd">Message Commands</h2>
           </div>
@@ -326,7 +352,8 @@
 
         <nav class="col-sm-3" id="affix-nav">
           <ul class="nav sidenav" data-spy="affix">
-            <li class="active">
+            <li class="active"><a href="#overview">Overview</a></li>
+            <li>
               <a href="#msg-cmd">Message Commands</a>
               <ul class="nav">
                 <li><a href="#fields-msg-cmd">Fields</a></li>
