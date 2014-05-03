@@ -604,7 +604,7 @@
             <dt>Length/Error</dt>
             <dd><kbd>0xff</kbd> if an error occured. <kbd>0x20</kbd> otherwise.</dd>
             <dt>Content</dt>
-            <dd>Contains the Drop public key (on 32 bytes).</dd>
+            <dd>The Drop public key (on 32 bytes).</dd>
           </dl>
 
           <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
@@ -617,6 +617,36 @@
           <hr />
 
           <h3 id="sign-drop-cmd">Sign</h3>
+
+          <p class="lead">Sign the given content with the Drop private key.</p>
+
+          <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
+          <dl class="dl-horizontal">
+            <dt>Signed</dt>
+            <dd><kbd>0</kbd></dd>
+            <dt>Code</dt>
+            <dd><kbd>0x03</kbd></dd>
+            <dt>Length/Error</dt>
+            <dd>Length of the <em>Content</em> field in bytes (less than 64 bytes).</dd>
+            <dt>Content</dt>
+            <dd>The content to sign. It cannot be more than 64 bytes long.</dd>
+          </dl>
+
+          <h4><i class="glyphicon glyphicon-open"></i> Response</h4>
+          <p>Only the following field is modified:</p>
+          <dl class="dl-horizontal">
+            <dt>Length/Error</dt>
+            <dd><kbd>0xff</kbd> if an error occured. <kbd>0x20</kbd> otherwise.</dd>
+            <dt>Content</dt>
+            <dd>The signature of the given content (on 32 bytes).</dd>
+          </dl>
+
+          <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
+          <p>If an error occurs, the <em>Length/Error</em> field is set to <kbd>0xff</kbd> and the <em>Content</em> field contains one of the following error codes:</p>
+          <dl class="dl-horizontal">
+            <dt><kbd>0x1f</kbd></dt>
+            <dd>Invalid length (check the syntax of your command).</dd>
+          </dl>
 
           <hr />
 
@@ -635,7 +665,7 @@
           <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
           <dl class="dl-horizontal">
             <dt>Signed</dt>
-            <dd><kbd>0</kbd></dd>
+            <dd><kbd>1</kbd></dd>
             <dt>Code</dt>
             <dd><kbd>0x05</kbd></dd>
             <dt>Length/Error</dt>
