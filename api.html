@@ -363,6 +363,65 @@
 
           <h3 id="create-box-cmd">Create Box</h3>
 
+          <p class="lead">Create a new box with the given ID.</p>
+
+          <div class="alert alert-warning"><i class="glyphicon glyphicon-lock"></i> <strong>Admin</strong> This command must be signed by the administrator. See <a href="#auth">Authentication section</a> for more informations.</div>
+
+          <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
+          <dl class="dl-horizontal">
+            <dt>Signed</dt>
+            <dd><kbd>1</kbd></dd>
+            <dt>Code</dt>
+            <dd><kbd>0x00</kbd></dd>
+            <dt>Length/Error</dt>
+            <dd><kbd>0x06</kbd></dd>
+            <dt>Box ID</dt>
+            <dd>Set to the ID of the box you want to create.</dd>
+          </dl>
+
+          <p>The <em>Content</em> field must contain the following parameters for the new box:</p>
+
+          <table class="table fields">
+            <tr class="field-names">
+              <td colspan="8">Permissions</td>
+              <td colspan="8">Box size [0..7]</td>
+              <td colspan="4">Max message length [0..3]</td>
+              <td colspan="4">Box size [8..11]</td>
+              <td colspan="2">Delete mode</td>
+              <td colspan="1">Flood mode</td>
+              <td colspan="5">Max message length [4..8]</td>
+              <td colspan="16">Box mask</td>
+            </tr>
+            <tr class="binary">
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+            <tr class="hex">
+              <td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td><td colspan="8">0x00</td>
+            </tr>
+          </table>
+
+          <div class="alert alert-danger">TODO: explain the fields!!</div>
+
+
+          <h4><i class="glyphicon glyphicon-open"></i> Response</h4>
+          <p>Only the following field is modified:</p>
+          <dl class="dl-horizontal">
+            <dt>Length/Error</dt>
+            <dd><kbd>0xff</kbd> if an error occured.</dd>
+          </dl>
+
+          <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
+          <p>If an error occurs, the <em>Length/Error</em> field is set to <kbd>0xff</kbd> and the <em>Content</em> field contains one of the following error codes:</p>
+          <dl class="dl-horizontal">
+            <dt><kbd>0x1f</kbd></dt>
+            <dd>Invalid length (check the syntax of your command).</dd>
+            <dt><kbd>0x22</kbd></dt>
+            <dd>Not authorized (you must sign your request as admin).</dd>
+            <dt><kbd>0x35</kbd></dt>
+            <dd>Bad signature.</dd>
+          </dl>
+
+
           <hr />
 
           <h3 id="delete-box-cmd">Delete Box</h3>
