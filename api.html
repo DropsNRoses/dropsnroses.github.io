@@ -389,7 +389,7 @@
           <p>Only the following field is modified:</p>
           <dl class="dl-horizontal">
             <dt>Length/Error</dt>
-            <dd><kbd>0xff</kbd> if an error occured. Length of the content in bytes otherwise.</dd>
+            <dd><kbd>0xff</kbd> if an error occured.</dd>
           </dl>
 
           <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
@@ -408,6 +408,40 @@
           <hr />
 
           <h3 id="ids-box-cmd">List Message IDs</h3>
+
+          <p class="lead">List the IDs of the messages stored in the given box.</p>
+
+          <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
+          <dl class="dl-horizontal">
+            <dt>Signed</dt>
+            <dd><kbd>0</kbd></dd>
+            <dt>Code</dt>
+            <dd><kbd>0x02</kbd></dd>
+            <dt>Length/Error</dt>
+            <dd><kbd>0x00</kbd></dd>
+            <dt>Box ID</dt>
+            <dd>Set to the box ID you want to list.</dd>
+            <dt>Content</dt>
+            <dd>Empty.</dd>
+          </dl>
+
+          <h4><i class="glyphicon glyphicon-open"></i> Response</h4>
+          <p>Only the following field is modified:</p>
+          <dl class="dl-horizontal">
+            <dt>Length/Error</dt>
+            <dd><kbd>0xff</kbd> if an error occured. Length of the content in bytes otherwise.</dd>
+            <dt>Content</dt>
+            <dd>Contains the list of message IDs. Each ID is store on 2 bytes.</dd>
+          </dl>
+
+          <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Error codes</h4>
+          <p>If an error occurs, the <em>Length/Error</em> field is set to <kbd>0xff</kbd> and the <em>Content</em> field contains one of the following error codes:</p>
+          <dl class="dl-horizontal">
+            <dt><kbd>0x16</kbd></dt>
+            <dd>Box not found.</dd>
+            <dt><kbd>0x1f</kbd></dt>
+            <dd>Invalid length (check the syntax of your command).</dd>
+          </dl>
 
           <hr />
 
