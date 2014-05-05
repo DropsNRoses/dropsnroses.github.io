@@ -84,6 +84,37 @@
 
           <div class="page-header">
             <h2 id="advertising">Advertising</h2>
+
+            <p class="lead">The Drops are advertising every 0.5 seconds. The advertising packet contains the default BLE advertising fields (like the Drop name), and also some informations about the drop in the manufacturer specific data.</p>
+            <p>The manufacturer specific data field consists of 6 bytes organized like this:</p>
+
+            <table class="table fields">
+            <tr class="field-names">
+              <td>Drop Type</td>
+              <td colspan="2">Revision</td>
+              <td colspan="3">Current timestamp</td>
+              <td colspan="2">X</td>
+            </tr>
+            <tr class="binary">
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+            <tr class="hex">
+              <td colspan="8">0x00</td>
+            </tr>
+          </table>
+
+          <dl class="dl-horizontal">
+            <dt>Drop Type</dt>
+            <dd>Code used by the applications to identify the compatible drops.</dd>
+            <dt>Revision</dt>
+            <dd><span class="text-muted">Not yet used.</span></dd>
+            <dt>Current timestamp</dt>
+            <dd>Last timestamp registered by the drop.</dd>
+            <dt>X</dt>
+            <dd><span class="text-muted">Not used.</span></dd>
+          </dl>
+
+
           </div>
 
 
@@ -101,7 +132,7 @@
               <td colspan="6">Code</td>
               <td>S</td>
               <td colspan="8">LE [1..8]</td>
-              <td colspan="3">-</td>
+              <td colspan="3">X</td>
               <td colspan="5">Box ID</td>
               <td colspan="8">Message ID [0..8]</td>
               <td>-</td>
@@ -131,8 +162,8 @@
             <dd>ID of the box where the message is stored.</dd>
             <dt>Timeout</dt>
             <dd>Timeout of the message.</dd>
-            <dt>-</dt>
-            <dd>Not used.</dd>
+            <dt>X</dt>
+            <dd><span class="text-muted">Not used.</span></dd>
           </dl>
 
           <hr />
@@ -347,7 +378,7 @@
               <td colspan="6">Code</td>
               <td>S</td>
               <td colspan="8">LE [1..8]</td>
-              <td colspan="3">-</td>
+              <td colspan="3">X</td>
               <td colspan="5">Box ID</td>
             </tr>
             <tr class="binary">
@@ -367,8 +398,8 @@
             <dd>Length of the <em>Content</em> field. Set to <kbd>0xff</kbd> if an error occurs.</dd>
             <dt>Box ID</dt>
             <dd>ID of the box where the message is stored.</dd>
-            <dt>-</dt>
-            <dd>Not used.</dd>
+            <dt>X</dt>
+            <dd><span class="text-muted">Not used.</span></dd>
           </dl>
 
           <hr />
@@ -482,6 +513,8 @@
 
           <p class="lead">List the IDs of the messages stored in the given box.</p>
 
+          <div class="alert alert-warning"><i class="glyphicon glyphicon-exclamation-sign"></i> <strong>Warning!</strong> The list may contains IDs of messages whose timestamps have expired. If you need to be sure about the validity of a message, you have to explicitly read it.</div>
+
           <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
           <dl class="dl-horizontal">
             <dt>Signed</dt>
@@ -518,7 +551,7 @@
 
           <h3 id="revs-box-cmd">List Message Revisions</h3>
 
-          <div class="alert alert-danger">Not documented yet :(</div>
+          <div class="alert alert-warning">Not implemented yet.</div>
 
 
 
@@ -672,6 +705,8 @@
 
           <div class="alert alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> <strong>Use with caution!</strong> This command will erase all the boxes and messages stored in the box. There is no way to recover them after running this command. Also, depending on the parameters you give, this command may revoke the Drop keys and the administrator public key.</div>
 
+          <div class="alert alert-warning"><i class="glyphicon glyphicon-exclamation-sign"></i> <strong>Warning!</strong> This command will disconnect your device instantly. Also this command takes up to 100 seconds to be performed. During the process, the led is on. Do not try to connect the drop while the led is on.</div>
+
           <div class="alert alert-info"><i class="glyphicon glyphicon-lock"></i> <strong>Admin</strong> This command must be signed by the administrator. See <a href="#auth">Authentication section</a> for more informations.</div>
 
           <h4><i class="glyphicon glyphicon-save"></i> Request</h4>
@@ -683,7 +718,7 @@
             <dt>Length/Error</dt>
             <dd><kbd>0x01</kbd></dd>
             <dt>Content</dt>
-            <dd><kbd>0x00</kbd> to preserve the Drop and Admin keys.<br /><kbd>0x01</kbd> to preserve the Drop keys and reset the Admin key.<br /><kbd>0x02</kbd> to reset the Drop keys and preserve the Admin key.<br /><kbd>0x03</kbd> to reset the Drop and Admin keys.</dd>
+            <dd><kbd>0x00</kbd> to preserve the Drop and Admin keys.<br /><kbd>0x01</kbd> to reset the Drop keys and preserve the Admin key.<br /><kbd>0x02</kbd> to preserve the Drop keys and reset the Admin key.<br /><kbd>0x03</kbd> to reset the Drop and Admin keys.</dd>
           </dl>
 
           <h4><i class="glyphicon glyphicon-open"></i> Response</h4>
