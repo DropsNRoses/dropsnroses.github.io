@@ -799,7 +799,7 @@
               <li>The index is written is hexadecimal (the chunk after <kbd>09</kbd> is <kbd>0a</kbd>).</li>
               <li>No padding is required for the last chunk.</li>
               <li>A command which is exactly 20 bytes long <strong>does not</strong> need to be split.</li>
-              <li>A command which is exactly 40 bytes long requires 2 chunks (and not a third empty one).</li>
+              <li>A command which is exactly 39 bytes long requires 2 chunks (and not a third empty one).</li>
               <li>If the command is signed, you must split your command <strong>after</strong> appending the signature. Also, given the length of a signature, all the signed commands are also Long Commands.</li>
               <li>If the sent index is not the one the Drop was expecting, it will return a <kbd>0x20</kbd> error.</li>
               <li>If anything else does not respect these rules, the Drop will return a <kbd>0x1f</kbd> error.</li>
